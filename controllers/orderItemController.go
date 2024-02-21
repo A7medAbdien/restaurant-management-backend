@@ -216,6 +216,7 @@ func ItemsByOrder(id string) (OrderItems []primitive.M, err error) {
 			{"quantity", 1},
 		}}}
 
+	// added some commas to make it more readable
 	groupStage := bson.D{
 		{"$group",
 			bson.D{
