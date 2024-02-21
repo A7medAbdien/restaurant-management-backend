@@ -39,12 +39,14 @@ func GetInvoices() gin.HandlerFunc {
 		result, err := invoiceCollection.Find(context.TODO(), bson.M{})
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "error occurred while listing invoice items"})
+			return
 		}
 
 		// decode
 		var allInvoices []bson.M
 		if err = result.All(ctx, &allInvoices); err != nil {
 			log.Fatal(err)
+			return
 		}
 
 		// response
@@ -64,6 +66,7 @@ func GetInvoice() gin.HandlerFunc {
 		err := invoiceCollection.FindOne(ctx, bson.M{"invoice_id": invoiceId}).Decode(&invoice)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "error occurred while fetching invoice item"})
+			return
 		}
 
 		// populate InvoiceView
