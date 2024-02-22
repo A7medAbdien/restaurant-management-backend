@@ -158,12 +158,6 @@ func Login() gin.HandlerFunc {
 			return
 		}
 
-		// validate
-		if err := validate.Struct(user); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
-
 		// find user
 		var foundUser models.User
 		err := userCollection.FindOne(ctx, bson.M{"email": user.Email}).Decode(&foundUser)
